@@ -1,33 +1,61 @@
-Haland Petcare
+---
+title: Haland Petcare Project Specification
+version: 1.1.0
+last_modified: 2026-06-29
+owner: Lead Architect
+status: Approved
+depends_on: []
+referenced_by: [WORKFLOW.md, DATABASE.md, ERD.md, UI_GUIDELINES.md, BUSINESS_RULES.md, SECURITY.md, TESTING_STRATEGY.md, DEPLOYMENT.md, DEVELOPMENT_STANDARDS.md, ROADMAP.md, GLOSSARY.md]
+---
 
-Version: 1.0.0
+# Haland Petcare
 
-Status: Product Specification (Master Document)
+## Related Documents
+
+| Document | Purpose |
+|---|---|
+| [WORKFLOW.md](WORKFLOW.md) | Complete business workflows and state machines |
+| [DATABASE.md](DATABASE.md) | Database architecture, rules, and conventions |
+| [ERD.md](ERD.md) | Entity relationship diagram and table definitions |
+| [UI_GUIDELINES.md](UI_GUIDELINES.md) | UI/UX standards and component library |
+| [BUSINESS_RULES.md](BUSINESS_RULES.md) | Centralized catalog of all business rules |
+| [SECURITY.md](SECURITY.md) | Access control, authentication, and data protection |
+| [TESTING_STRATEGY.md](TESTING_STRATEGY.md) | Test pyramid, critical path tests, UAT criteria |
+| [DEPLOYMENT.md](DEPLOYMENT.md) | Railway deployment, CI/CD, backup, and rollback |
+| [DEVELOPMENT_STANDARDS.md](DEVELOPMENT_STANDARDS.md) | Coding standards, service layer, and code review |
+| [ROADMAP.md](ROADMAP.md) | Future features and release planning |
+| [GLOSSARY.md](GLOSSARY.md) | Domain terminology and definitions |
 
 ---
 
-Project Vision
+## Document Map
 
-Haland Petcare adalah sistem manajemen klinik hewan berbasis web yang dirancang untuk mengelola seluruh operasional satu klinik dari satu platform yang terintegrasi.
-
-Sistem harus menghubungkan seluruh proses bisnis tanpa input data berulang.
-
-Semua modul harus saling terintegrasi.
-
-Target utama adalah:
-
-- Cepat digunakan oleh staff
-- Mudah dipelajari
-- UI modern
-- Workflow otomatis
-- Minim klik
-- Minim kesalahan input
+This document is the **master entry point**. It defines vision, goals, users, and scope. Detailed rules, workflows, and designs are delegated to the specialized documents above.
 
 ---
 
-Product Goals
+## Project Vision
 
-Membangun sistem yang mampu mengelola:
+Haland Petcare is a web-based veterinary clinic management system designed to manage all operations of a single clinic from one integrated platform.
+
+The system must connect all business processes without repeated data entry.
+
+All modules must be integrated.
+
+Primary targets:
+
+- Fast to use by staff
+- Easy to learn
+- Modern UI
+- Automated workflow
+- Minimal clicks
+- Minimal input errors
+
+---
+
+## Product Goals
+
+Build a system capable of managing:
 
 - Customer
 - Pet
@@ -44,78 +72,44 @@ Membangun sistem yang mampu mengelola:
 - Reports
 - Customer Portal
 
-dalam satu workflow terpadu.
+in one unified workflow.
 
 ---
 
-Target Users
+## Target Users
 
-Owner
+| Role | Primary Focus | Module Access |
+|---|---|---|
+| **Owner** | Full business oversight | Dashboard, Revenue, Reports, Inventory, Audit Log, User Management, Settings |
+| **Doctor** | Medical work | Queue, Medical Record, Diagnosis, Prescription, Vaccination, Inpatient |
+| **Staff** | Daily operations | Customer Registration, Appointment, Check-in, POS, Grooming, Hotel, Inventory |
+| **Customer** | Self-service portal | Appointment, Medical History, Vaccination History, Invoice, Booking |
 
-Owner memiliki akses penuh terhadap seluruh data bisnis.
+### Role-Permission Summary
 
-Fitur utama:
+| Capability | Owner | Doctor | Staff | Customer |
+|---|---|---|---|---|
+| View all revenue | ✅ | ❌ | ❌ | ❌ |
+| Manage users and roles | ✅ | ❌ | ❌ | ❌ |
+| Create medical records | ✅ | ✅ | ❌ | ❌ |
+| Manage prescriptions | ✅ | ✅ | ❌ | ❌ |
+| Register customers and pets | ✅ | ✅ | ✅ | ❌ |
+| Process POS payments | ✅ | ❌ | ✅ | ❌ |
+| Manage inventory | ✅ | ❌ | ✅ | ❌ |
+| View own data | ❌ | ❌ | ❌ | ✅ |
+| Book appointments | ✅ | ✅ | ✅ | ✅ |
 
-- Dashboard
-- Revenue
-- Reports
-- Inventory
-- Audit Log
-- User Management
-- Settings
-
----
-
-Doctor
-
-Dokter hanya fokus pada pekerjaan medis.
-
-Fitur utama:
-
-- Queue
-- Medical Record
-- Diagnosis
-- Prescription
-- Vaccination
-- Inpatient
+For the complete access control matrix, see [SECURITY.md](SECURITY.md).
 
 ---
 
-Staff
-
-Staff menjalankan operasional harian.
-
-Fitur utama:
-
-- Customer Registration
-- Appointment
-- Check-in
-- POS
-- Grooming
-- Hotel
-- Inventory
-
----
+## Main Workflow
 
 Customer
 
-Customer menggunakan portal mandiri.
+↓
 
-Fitur utama:
-
-- Appointment
-- Medical History
-- Vaccination History
-- Invoice
-- Booking
-
----
-
-Main Workflow
-
-Seluruh modul harus mengikuti alur berikut.
-
-Customer
+Pet
 
 ↓
 
@@ -157,11 +151,33 @@ Payment
 
 Completed
 
-Tidak boleh ada input ulang pada tahap berikutnya.
+↓
+
+Customer Portal Updated
+
+No duplicate input is allowed at any stage.
+
+For detailed workflows, see [WORKFLOW.md](WORKFLOW.md).
 
 ---
 
-Core Principles
+## Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Laravel 12 |
+| Frontend | Blade, Livewire 3, Tailwind CSS 4 |
+| Database | MySQL 8 |
+| Authentication | Laravel Starter Kit (Livewire) |
+| Queue | Laravel Queue |
+| Scheduler | Laravel Scheduler |
+| Deployment | Railway |
+| Development | GitHub Codespaces |
+| Version Control | GitHub |
+
+---
+
+## Core Principles
 
 - Single source of truth
 - No duplicate data
@@ -173,518 +189,53 @@ Core Principles
 
 ---
 
-Technology Stack
+## Module Inventory
 
-Backend
-
-- Laravel 12
-
-Frontend
-
-- Blade
-- Livewire 3
-- Tailwind CSS 4
-
-Database
-
-- MySQL 8
-
-Authentication
-
-- Laravel Starter Kit (Livewire)
-
-Queue
-
-- Laravel Queue
-
-Scheduler
-
-- Laravel Scheduler
-
-Deployment
-
-- Railway
-
-Development
-
-- GitHub Codespaces
-
-Version Control
-
-- GitHub
+| Module | Owned By | Detailed Specification |
+|---|---|---|
+| Dashboard | UI_GUIDELINES.md | Dashboard widgets per role |
+| Customer Management | WORKFLOW.md | Registration, profile, multiple pets |
+| Pet Management | WORKFLOW.md | Species, breed, medical timeline |
+| Appointment | WORKFLOW.md | Walk-in, online, reschedule, cancel |
+| Queue | WORKFLOW.md | Waiting → Called → Examining → Completed |
+| Medical Record | WORKFLOW.md | SOAP, vitals, diagnosis, treatment |
+| Pharmacy | WORKFLOW.md | Prescription, dosage, inventory integration |
+| Inventory | WORKFLOW.md | Stock in/out, adjustment, PO, alerts |
+| POS | WORKFLOW.md | Invoice, discount, tax, payment, receipt |
+| Grooming | WORKFLOW.md | Booking, progress, invoice |
+| Pet Hotel | WORKFLOW.md | Room, reservation, check in/out, invoice |
+| Vaccination | WORKFLOW.md | History, certificate, reminder |
+| Inpatient | WORKFLOW.md | Admission, monitoring, discharge |
+| Reports | WORKFLOW.md | Revenue, appointments, inventory, export |
+| Audit Log | WORKFLOW.md | Sensitive action logging |
+| User Management | WORKFLOW.md | Invite, roles, permissions, deactivate |
+| Clinic Settings | DATABASE.md / UI_GUIDELINES.md | Profile, hours, payment methods |
+| Customer Portal | WORKFLOW.md / UI_GUIDELINES.md | Self-service features |
 
 ---
 
-Modules
+## Non-Functional Requirements
 
-Dashboard
+- Fast
+- Reliable
+- Maintainable
+- Scalable
+- Readable
+- Modular
+- Enterprise Ready
 
-Owner dashboard
-
-Doctor dashboard
-
-Staff dashboard
-
-Customer dashboard
-
----
-
-Customer Management
-
-Customer Profile
-
-Address
-
-Phone
-
-Email
-
-Emergency Contact
-
-Multiple Pets
+For detailed performance, security, and testing requirements, see [DATABASE.md](DATABASE.md), [SECURITY.md](SECURITY.md), and [TESTING_STRATEGY.md](TESTING_STRATEGY.md).
 
 ---
 
-Pet Management
-
-Species
-
-Breed
-
-Gender
-
-Weight
-
-Birth Date
-
-Microchip
-
-Photo
-
-Owner
-
-Medical Timeline
-
----
-
-Appointment
-
-Walk In
-
-Online Booking
-
-Reschedule
-
-Cancel
-
-Status Workflow
-
-Calendar
-
----
-
-Queue
-
-Waiting
-
-Checked In
-
-Called
-
-Examining
-
-Completed
-
----
-
-Medical Record
-
-SOAP
-
-Chief Complaint
-
-Vital Signs
-
-Diagnosis
-
-Treatment
-
-Prescription
-
-Doctor Notes
-
-Follow Up
-
-Attachment
-
-Timeline
-
----
-
-Pharmacy
-
-Medicine
-
-Prescription
-
-Dosage
-
-Frequency
-
-Duration
-
-Inventory Integration
-
----
-
-Inventory
-
-Medicine
-
-Products
-
-Supplier
-
-Purchase Order
-
-Stock Movement
-
-Adjustment
-
-Minimum Stock
-
-Near Expired
-
-Inventory Ledger
-
----
-
-POS
-
-Invoice
-
-Services
-
-Products
-
-Medicine
-
-Discount
-
-Tax
-
-Payment
-
-Receipt
-
----
-
-Grooming
-
-Booking
-
-Services
-
-Progress
-
-Invoice Integration
-
----
-
-Pet Hotel
-
-Room
-
-Reservation
-
-Check In
-
-Check Out
-
-Daily Rate
-
-Invoice
-
----
-
-Vaccination
-
-History
-
-Certificate
-
-Reminder
-
-Upcoming Schedule
-
----
-
-Inpatient
-
-Admission
-
-Daily Monitoring
-
-Treatment
-
-Medication
-
-Discharge Summary
-
----
-
-Reports
-
-Revenue
-
-Appointments
-
-Inventory
-
-Doctor Productivity
-
-Best Selling Services
-
-Export CSV
-
----
-
-Audit Log
-
-Login
-
-Role Changes
-
-Stock Adjustment
-
-Medical Record Changes
-
-Invoice Void
-
----
-
-User Management
-
-Invite User
-
-Roles
-
-Permissions
-
-Deactivate User
-
----
-
-Clinic Settings
-
-Clinic Profile
-
-Business Hours
-
-Timezone
-
-Payment Methods
-
-Branding
-
----
-
-User Roles
-
-Owner
-
-Doctor
-
-Staff
-
-Customer
-
-Each role must have separate permissions.
-
----
-
-UI Principles
-
-Modern
-
-Minimal
-
-Professional
-
-Fast
-
-Responsive
-
-Accessible
-
-No unnecessary animations.
-
----
-
-Component Standards
-
-Buttons
-
-Forms
-
-Cards
-
-Tables
-
-Badges
-
-Modal
-
-Drawer
-
-Tabs
-
-Pagination
-
-Alerts
-
-Toast
-
-Loading Skeleton
-
-Empty State
-
-Reuse components everywhere.
-
----
-
-Database Rules
-
-Use foreign keys.
-
-Use indexes.
-
-Use transactions.
-
-Use soft deletes where appropriate.
-
-Medical records must never be physically deleted.
-
----
-
-Status Management
-
-Use PHP Enums.
-
-Never hardcode status strings.
-
----
-
-Performance
-
-Pagination
-
-Eager Loading
-
-Caching
-
-Optimized Queries
-
-No N+1 Queries
-
----
-
-Security
-
-Policies
-
-Authorization
-
-Validation
-
-CSRF Protection
-
-Escaped Output
-
-Audit Log
-
----
-
-Coding Standards
-
-PSR-12
-
-Typed Properties
-
-Return Types
-
-SOLID
-
-Service Layer
-
-Action Classes
-
-Thin Controllers
-
-No business logic in Blade.
-
----
-
-Testing
-
-Feature Tests
-
-Critical workflow testing
-
-Inventory testing
-
-POS testing
-
-Medical Record testing
-
----
-
-Non Functional Requirements
-
-Fast
-
-Reliable
-
-Maintainable
-
-Scalable
-
-Readable
-
-Modular
-
-Enterprise Ready
-
----
-
-Future Roadmap
-
-Multi Clinic
-
-Multi Tenant
-
-Laboratory
-
-Imaging
-
-WhatsApp Notification
-
-Email Notification
-
-Mobile App
-
-REST API
-
-Accounting Integration
-
-AI Assistant
-
-Analytics
-
-Business Intelligence
-
----
-
-Success Criteria
+## Success Criteria
 
 The system is considered successful when a complete patient visit can be processed from registration to payment without any duplicate data entry, while every action is automatically synchronized across related modules.
+
+---
+
+## Golden Rule
+
+Haland Petcare is a workflow-driven veterinary clinic management system.
+
+Every feature must support the complete clinic operation from patient arrival until payment without requiring duplicate input.

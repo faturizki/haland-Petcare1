@@ -1,12 +1,25 @@
+---
+title: Haland Petcare UI/UX Guidelines
+version: 1.1.0
+last_modified: 2026-06-29
+owner: Lead Architect
+status: Approved
+depends_on: [PROJECT_SPECIFICATION.md, WORKFLOW.md]
+referenced_by: [PROJECT_SPECIFICATION.md, WORKFLOW.md, DATABASE.md, ERD.md]
+---
 
+# Haland Petcare UI/UX Guidelines
 
-Haland Petcare UI/UX Guidelines
-
-Version: 1.0.0
+## Related Documents
+- [PROJECT_SPECIFICATION.md](PROJECT_SPECIFICATION.md) — Master project specification
+- [WORKFLOW.md](WORKFLOW.md) — Complete business workflows
+- [DATABASE.md](DATABASE.md) — Database architecture and rules
+- [ERD.md](ERD.md) — Entity relationship diagram
+- [GLOSSARY.md](GLOSSARY.md) — Domain terminology
 
 ---
 
-Design Philosophy
+## Design Philosophy
 
 Haland Petcare is an enterprise veterinary clinic management system.
 
@@ -30,69 +43,50 @@ Users should complete tasks with the fewest clicks possible.
 
 ---
 
-Design Principles
+## Design Principles
 
 Every screen should be:
 
-Simple
-
-Clean
-
-Modern
-
-Professional
-
-Predictable
-
-Responsive
-
-Accessible
-
-Fast
-
-Minimal
+- Simple
+- Clean
+- Modern
+- Professional
+- Predictable
+- Responsive
+- Accessible
+- Fast
+- Minimal
 
 Every page should look like it belongs to the same application.
 
 ---
 
-Inspiration
+## Inspiration
 
-Use these products as inspiration.
+Use these products as inspiration:
 
-Linear
-
-Stripe Dashboard
-
-GitHub
-
-Notion
-
-Supabase Dashboard
-
-Vercel Dashboard
+- Linear
+- Stripe Dashboard
+- GitHub
+- Notion
+- Supabase Dashboard
+- Vercel Dashboard
 
 Avoid designs similar to consumer social media applications.
 
 ---
 
-Layout Structure
+## Layout Structure
 
-Every page must use the same layout.
+Every page must use the same layout:
 
-Top Navigation
-
-Sidebar
-
-Breadcrumb
-
-Page Header
-
-Action Toolbar
-
-Main Content
-
-Footer (optional)
+- Top Navigation
+- Sidebar
+- Breadcrumb
+- Page Header
+- Action Toolbar
+- Main Content
+- Footer (optional)
 
 Never change navigation position.
 
@@ -100,39 +94,25 @@ Consistency is more important than creativity.
 
 ---
 
-Sidebar
+## Sidebar
 
 Sidebar must contain:
 
-Dashboard
-
-Appointments
-
-Customers
-
-Pets
-
-Medical Records
-
-Inventory
-
-Pharmacy
-
-POS
-
-Grooming
-
-Pet Hotel
-
-Vaccination
-
-Inpatient
-
-Reports
-
-Users
-
-Settings
+- Dashboard
+- Appointments
+- Customers
+- Pets
+- Medical Records
+- Inventory
+- Pharmacy
+- POS
+- Grooming
+- Pet Hotel
+- Vaccination
+- Inpatient
+- Reports
+- Users
+- Settings
 
 Collapsed sidebar should be supported.
 
@@ -140,39 +120,31 @@ Active page should always be highlighted.
 
 ---
 
-Top Navigation
+## Top Navigation
 
 Contains:
 
-Search
-
-Notifications
-
-Clinic Switch (future)
-
-Profile Menu
-
-Theme Switch
+- Search
+- Notifications
+- Clinic Switch (future)
+- Profile Menu
+- Theme Switch
 
 Never overload the top bar.
 
 ---
 
-Page Header
+## Page Header
 
 Every page should include:
 
-Title
+- Title
+- Subtitle
+- Breadcrumb
+- Primary Action Button
+- Secondary Actions
 
-Subtitle
-
-Breadcrumb
-
-Primary Action Button
-
-Secondary Actions
-
-Example
+Example:
 
 Customer Management
 
@@ -182,19 +154,16 @@ Manage customer information and pets.
 
 ---
 
-Cards
+## Cards
 
 Use cards consistently.
 
 Cards should contain:
 
-Title
-
-Optional Description
-
-Body
-
-Optional Footer
+- Title
+- Optional Description
+- Body
+- Optional Footer
 
 Avoid deep shadows.
 
@@ -202,33 +171,26 @@ Use subtle borders.
 
 ---
 
-Tables
+## Tables
 
 Tables are primary UI components.
 
 Every table should support:
 
-Search
-
-Sorting
-
-Filtering
-
-Pagination
-
-Column Visibility (future)
-
-CSV Export
-
-Bulk Actions (when necessary)
-
-Row Actions
+- Search
+- Sorting
+- Filtering
+- Pagination
+- Column Visibility (future)
+- CSV Export
+- Bulk Actions (when necessary)
+- Row Actions
 
 Never overload tables.
 
 ---
 
-Forms
+## Forms
 
 Forms should be clean.
 
@@ -248,19 +210,15 @@ Show loading indicators.
 
 ---
 
-Buttons
+## Buttons
 
-Button hierarchy
+Button hierarchy:
 
-Primary
-
-Secondary
-
-Outline
-
-Ghost
-
-Danger
+- Primary
+- Secondary
+- Outline
+- Ghost
+- Danger
 
 Avoid too many button styles.
 
@@ -268,159 +226,105 @@ Use one primary action per page.
 
 ---
 
-Modal
+## Modal
 
 Use modal only for:
 
-Confirmation
-
-Small Forms
-
-Delete Confirmation
-
-Quick Edit
+- Confirmation
+- Small Forms
+- Delete Confirmation
+- Quick Edit
 
 Never place large forms inside modal.
 
 ---
 
-Drawer
+## Drawer
 
 Use drawers for:
 
-Details
-
-Preview
-
-History
-
-Timeline
+- Details
+- Preview
+- History
+- Timeline
 
 Avoid full-screen drawers unless necessary.
 
 ---
 
-Tabs
+## Tabs
 
 Use tabs for complex modules.
 
-Medical Record
+### Medical Record
+- SOAP
+- Vital Signs
+- Diagnosis
+- Treatment
+- Prescription
+- History
 
-SOAP
-
-Vital Signs
-
-Diagnosis
-
-Prescription
-
-History
-
-Pet Profile
-
-General
-
-Vaccination
-
-Medical History
-
-Attachments
+### Pet Profile
+- General
+- Vaccination
+- Medical History
+- Attachments
 
 ---
 
-Dashboard
+## Dashboard
 
 Dashboard should prioritize information.
 
-Cards
-
-Charts
-
-Recent Activity
-
-Quick Actions
-
-Alerts
+- Cards
+- Charts
+- Recent Activity
+- Quick Actions
+- Alerts
 
 Never hide important metrics.
 
 ---
 
-Dashboard Widgets
+## Dashboard Widgets
 
-Owner
+### Owner
+- Revenue Today
+- Revenue Month
+- Appointments Today
+- Low Stock
+- Active Inpatients
+- Best Selling Services
+- Doctor Productivity
 
-Revenue Today
+### Staff
+- Today's Queue
+- Walk In
+- Pending Payments
+- Low Stock
 
-Revenue Month
+### Doctor
+- Today's Queue
+- Current Patient
+- Completed Today
+- Upcoming Appointments
 
-Appointments Today
-
-Low Stock
-
-Active Inpatients
-
-Best Selling Services
-
-Doctor Productivity
-
-Staff
-
-Today's Queue
-
-Walk In
-
-Pending Payments
-
-Low Stock
-
-Doctor
-
-Today's Queue
-
-Current Patient
-
-Completed Today
-
-Upcoming Appointments
-
-Customer
-
-Upcoming Appointment
-
-Medical History
-
-Vaccination Reminder
-
-Invoices
+### Customer
+- Upcoming Appointment
+- Medical History
+- Vaccination Reminder
+- Invoices
 
 ---
 
-Colors
+## Colors
 
-Primary
-
-Blue
-
-Success
-
-Green
-
-Warning
-
-Orange
-
-Danger
-
-Red
-
-Neutral
-
-Gray
-
-Background
-
-White
+- Primary: Blue
+- Success: Green
+- Warning: Orange
+- Danger: Red
+- Neutral: Gray
+- Background: White
 
 Avoid excessive colors.
 
@@ -428,21 +332,17 @@ Status colors should remain consistent.
 
 ---
 
-Typography
+## Typography
 
 Use Inter.
 
-Hierarchy
+Hierarchy:
 
-H1
-
-H2
-
-H3
-
-Body
-
-Caption
+- H1
+- H2
+- H3
+- Body
+- Caption
 
 Use readable font sizes.
 
@@ -450,7 +350,7 @@ Avoid small text.
 
 ---
 
-Icons
+## Icons
 
 Use Heroicons only.
 
@@ -460,39 +360,26 @@ Icons should always accompany navigation items.
 
 ---
 
-Spacing
+## Spacing
 
 Use an 8px spacing system.
 
-Examples
-
-8
-
-16
-
-24
-
-32
-
-48
-
-64
+Examples: 8, 16, 24, 32, 48, 64
 
 Avoid inconsistent spacing.
 
 ---
 
-Border Radius
+## Border Radius
 
-Small
-
-Medium
+- Small
+- Medium
 
 Never use exaggerated rounded corners.
 
 ---
 
-Shadows
+## Shadows
 
 Minimal.
 
@@ -500,19 +387,17 @@ Prefer borders over shadows.
 
 ---
 
-Empty States
+## Empty States
 
 Every module should have an empty state.
 
 Include:
 
-Illustration (optional)
+- Illustration (optional)
+- Description
+- Primary Action
 
-Description
-
-Primary Action
-
-Example
+Example:
 
 No appointments found.
 
@@ -522,31 +407,26 @@ Create the first appointment.
 
 ---
 
-Loading States
+## Loading States
 
 Never display blank pages.
 
 Use:
 
-Skeleton Loader
-
-Loading Spinner
-
-Progress Bar (when appropriate)
+- Skeleton Loader
+- Loading Spinner
+- Progress Bar (when appropriate)
 
 ---
 
-Notifications
+## Notifications
 
 Use toast notifications.
 
-Success
-
-Error
-
-Warning
-
-Info
+- Success
+- Error
+- Warning
+- Info
 
 Auto dismiss after a few seconds.
 
@@ -554,125 +434,94 @@ Critical errors should require user acknowledgement.
 
 ---
 
-Status Badges
+## Status Badges
 
 Use consistent badge colors.
 
-Scheduled
-
-Blue
-
-Checked In
-
-Purple
-
-Examining
-
-Orange
-
-Completed
-
-Green
-
-Cancelled
-
-Red
+| Status | Color |
+|---|---|
+| Scheduled | Blue |
+| Checked In | Purple |
+| Waiting | Yellow |
+| Called | Indigo |
+| Examining | Orange |
+| Completed | Green |
+| Cancelled | Red |
+| Pending | Blue |
+| Paid | Green |
+| Failed | Red |
+| Refunded | Orange |
+| Voided | Gray |
+| Draft | Slate |
 
 Never invent new badge colors.
 
 ---
 
-Timeline
+## Timeline
 
 Use timelines for:
 
-Medical History
-
-Audit Log
-
-Vaccination
-
-Hospitalization
-
-Appointment History
+- Medical History
+- Audit Log
+- Vaccination
+- Hospitalization
+- Appointment History
 
 Timeline should always be chronological.
 
 ---
 
-POS Layout
+## POS Layout
 
 POS must use two-column layout.
 
-Left
+### Left
+- Services
+- Products
+- Medicine
+- Search
+- Categories
 
-Services
-
-Products
-
-Medicine
-
-Search
-
-Categories
-
-Right
-
-Invoice
-
-Payment
-
-Discount
-
-Tax
-
-Total
-
-Process Payment
+### Right
+- Invoice
+- Payment
+- Discount
+- Tax
+- Total
+- Process Payment
 
 The cashier should complete payment with minimal clicks.
 
 ---
 
-Medical Record Layout
+## Medical Record Layout
 
-Patient Summary
-
-Tabs
-
-SOAP
-
-Vitals
-
-Diagnosis
-
-Treatment
-
-Prescription
-
-History
+- Patient Summary
+- Tabs
+  - SOAP
+  - Vitals
+  - Diagnosis
+  - Treatment
+  - Prescription
+  - History
 
 Always display previous records.
 
 ---
 
-Accessibility
+## Accessibility
 
-Keyboard navigation.
-
-Visible focus.
-
-Proper labels.
-
-Proper contrast.
-
-ARIA attributes where appropriate.
-
-Never rely only on color.
+- Keyboard navigation
+- Visible focus
+- Proper labels
+- Proper contrast
+- ARIA attributes where appropriate
+- Never rely only on color
 
 ---
 
-Responsive Design
+## Responsive Design
 
 Desktop First.
 
@@ -686,7 +535,7 @@ Admin modules optimized for desktop.
 
 ---
 
-Dark Mode
+## Dark Mode
 
 Support future dark mode.
 
@@ -696,69 +545,45 @@ Never hardcode colors.
 
 ---
 
-Component Library
+## Component Library
 
 Always reuse components.
 
-Button
-
-Input
-
-Textarea
-
-Select
-
-Checkbox
-
-Radio
-
-Switch
-
-Card
-
-Badge
-
-Alert
-
-Toast
-
-Table
-
-Pagination
-
-Modal
-
-Drawer
-
-Tabs
-
-Avatar
-
-Dropdown
-
-Breadcrumb
-
-Page Header
-
-Stats Card
-
-Chart Card
-
-Timeline
+- Button
+- Input
+- Textarea
+- Select
+- Checkbox
+- Radio
+- Switch
+- Card
+- Badge
+- Alert
+- Toast
+- Table
+- Pagination
+- Modal
+- Drawer
+- Tabs
+- Avatar
+- Dropdown
+- Breadcrumb
+- Page Header
+- Stats Card
+- Chart Card
+- Timeline
 
 Every component should have consistent spacing and styling.
 
 ---
 
-Animations
+## Animations
 
 Animations should be subtle.
 
-Fade
-
-Slide
-
-Loading
+- Fade
+- Slide
+- Loading
 
 Avoid bounce effects.
 
@@ -768,27 +593,20 @@ Performance is more important than animation.
 
 ---
 
-UX Principles
+## UX Principles
 
-Minimize clicks.
-
-Reduce typing.
-
-Use autocomplete where possible.
-
-Prefill known data.
-
-Use inline validation.
-
-Show clear success feedback.
-
-Prevent user mistakes.
-
-Never require duplicate input.
+- Minimize clicks
+- Reduce typing
+- Use autocomplete where possible
+- Prefill known data
+- Use inline validation
+- Show clear success feedback
+- Prevent user mistakes
+- Never require duplicate input
 
 ---
 
-Golden Rule
+## Golden Rule
 
 The interface exists to help clinic staff complete work quickly and accurately.
 

@@ -1,12 +1,25 @@
-DATABASE.md
+---
+title: Haland Petcare Database Architecture
+version: 1.1.0
+last_modified: 2026-06-29
+owner: Lead Architect
+status: Approved
+depends_on: [ERD.md]
+referenced_by: [PROJECT_SPECIFICATION.md, WORKFLOW.md, ERD.md]
+---
 
-Haland Petcare Database Architecture
+# Haland Petcare Database Architecture
 
-Version: 1.0.0
+## Related Documents
+- [PROJECT_SPECIFICATION.md](PROJECT_SPECIFICATION.md) — Master project specification
+- [WORKFLOW.md](WORKFLOW.md) — Complete business workflows
+- [ERD.md](ERD.md) — Entity relationship diagram and table definitions
+- [BUSINESS_RULES.md](BUSINESS_RULES.md) — Centralized business rules catalog
+- [GLOSSARY.md](GLOSSARY.md) — Domain terminology
 
 ---
 
-Overview
+## Overview
 
 This document defines the database architecture for Haland Petcare.
 
@@ -27,313 +40,313 @@ Use foreign keys whenever possible.
 
 ---
 
-Database Engine
+## Database Engine
 
-MySQL 8
-
-Character Set
-
-utf8mb4
-
-Collation
-
-utf8mb4_unicode_ci
-
-Storage Engine
-
-InnoDB
-
-Timezone
-
-UTC
+- **Engine:** MySQL 8
+- **Character Set:** utf8mb4
+- **Collation:** utf8mb4_unicode_ci
+- **Storage Engine:** InnoDB
+- **Timezone:** UTC
 
 ---
 
-Primary Key
+## Primary Key
 
 Every table must use:
 
-id
-
-BIGINT UNSIGNED
-
-AUTO INCREMENT
-
-PRIMARY KEY
+- `id`
+- `BIGINT UNSIGNED`
+- `AUTO_INCREMENT`
+- `PRIMARY KEY`
 
 ---
 
-Timestamp
+## Timestamp
 
-Every table should contain
+Every table should contain:
 
-created_at
+- `created_at`
+- `updated_at`
 
-updated_at
+Use soft deletes where appropriate:
 
-Use soft deletes where appropriate
-
-deleted_at
+- `deleted_at`
 
 Medical records must never be permanently deleted.
 
 ---
 
-Naming Convention
+## Naming Convention
 
-Tables
+### Tables
 
-Plural
+Plural.
 
-Examples
+Examples:
 
-customers
+- customers
+- pets
+- appointments
+- medical_records
+- prescriptions
+- invoice_items
+- inventory_movements
 
-pets
+### Columns
 
-appointments
+snake_case.
 
-medical_records
+### Foreign Keys
 
-prescriptions
+- customer_id
+- pet_id
+- doctor_id
+- appointment_id
+- invoice_id
+- inventory_item_id
 
-invoice_items
+### Polymorphic Columns
 
-inventory_movements
-
-Columns
-
-snake_case
-
-Foreign Keys
-
-customer_id
-
-pet_id
-
-doctor_id
-
-appointment_id
-
-invoice_id
+- invoiceable_type
+- invoiceable_id
+- notifiable_type
+- notifiable_id
 
 ---
 
-Relationships
+## Relationships
 
-Customer
+### Customer
+- hasMany Pets
+- hasMany Appointments
+- hasMany Invoices
+- hasMany GroomingBookings
 
-hasMany Pets
+### Pet
+- belongsTo Customer
+- belongsTo Species
+- belongsTo Breed
+- hasMany Medical Records
+- hasMany Vaccinations
+- hasMany Appointments
+- hasMany InpatientRecords
+- hasMany GroomingBookings
+- hasMany HotelBookings
 
-hasMany Appointments
+### Species
+- hasMany Breeds
+- hasMany Pets
 
-hasMany Invoices
+### Breed
+- belongsTo Species
+- hasMany Pets
 
-Pet
+### Appointment
+- belongsTo Customer
+- belongsTo Pet
+- belongsTo Doctor
+- hasOne Medical Record
+- morphOne Invoice (as invoiceable)
 
-belongsTo Customer
+### Medical Record
+- belongsTo Appointment
+- belongsTo Pet
+- belongsTo Doctor
+- hasMany Diagnoses
+- hasMany Treatments
+- hasMany Prescriptions
 
-hasMany Medical Records
+### Prescription
+- belongsTo Medical Record
+- hasMany Prescription Items
 
-hasMany Vaccinations
+### Prescription Item
+- belongsTo Prescription
+- belongsTo Inventory Item
 
-hasMany Appointments
+### Inventory Item
+- belongsTo Supplier
+- belongsTo Inventory Category
+- hasMany Prescription Items
+- hasMany Inventory Movements
+- hasMany Purchase Order Items
 
-Appointment
+### Inventory Category
+- hasMany Inventory Items
 
-belongsTo Customer
+### Supplier
+- hasMany Inventory Items
+- hasMany Purchase Orders
 
-belongsTo Pet
+### Purchase Order
+- belongsTo Supplier
+- hasMany Purchase Order Items
 
-belongsTo Doctor
+### Purchase Order Item
+- belongsTo Purchase Order
+- belongsTo Inventory Item
 
-hasOne Medical Record
+### Inventory Movement
+- belongsTo Inventory Item
+- belongsTo User
 
-hasOne Invoice
+### Invoice
+- belongsTo Customer
+- belongsTo Cashier (User)
+- morphTo Invoiceable
+- hasMany Invoice Items
+- hasMany Payments
 
-Medical Record
+### Invoice Item
+- belongsTo Invoice
 
-belongsTo Appointment
+### Payment
+- belongsTo Invoice
+- belongsTo Cashier (User)
 
-belongsTo Pet
+### Grooming Booking
+- belongsTo Customer
+- belongsTo Pet
+- morphOne Invoice (as invoiceable)
 
-belongsTo Doctor
+### Hotel Room
+- hasMany Hotel Bookings
 
-hasMany Prescriptions
+### Hotel Booking
+- belongsTo Hotel Room
+- belongsTo Pet
+- belongsTo Customer
+- morphOne Invoice (as invoiceable)
 
-Prescription
+### Inpatient Record
+- belongsTo Pet
+- belongsTo Doctor
+- hasMany Daily Monitorings
 
-belongsTo Medical Record
+### Daily Monitoring
+- belongsTo Inpatient Record
 
-hasMany Prescription Items
+### User
+- belongsTo Role
+- hasMany Appointments
+- hasMany Medical Records
+- hasMany Audit Logs
+- hasMany Inventory Movements
+- hasMany Payments
 
-Invoice
+### Role
+- hasMany Users
+- belongsToMany Permissions
 
-belongsTo Appointment
-
-hasMany Invoice Items
-
-hasMany Payments
-
-Inventory Item
-
-belongsTo Supplier
-
-hasMany Inventory Movements
-
-Supplier
-
-hasMany Inventory Items
-
-User
-
-hasMany Medical Records
-
-hasMany Audit Logs
-
-Role
-
-hasMany Users
+### Permission
+- belongsToMany Roles
 
 ---
 
-Core Tables
+## Core Tables
 
-users
-
-roles
-
-permissions
-
-customers
-
-pets
-
-species
-
-breeds
-
-appointments
-
-appointment_statuses (Enum)
-
-medical_records
-
-diagnoses
-
-treatments
-
-prescriptions
-
-prescription_items
-
-medicines
-
-medicine_categories
-
-suppliers
-
-purchase_orders
-
-purchase_order_items
-
-inventory_items
-
-inventory_movements
-
-invoices
-
-invoice_items
-
-payments
-
-grooming_bookings
-
-pet_hotel_rooms
-
-pet_hotel_bookings
-
-vaccinations
-
-inpatients
-
-daily_monitorings
-
-reports_cache
-
-audit_logs
-
-settings
-
-notifications
+- users
+- roles
+- permissions
+- role_permission
+- customers
+- pets
+- species
+- breeds
+- appointments
+- medical_records
+- diagnoses
+- treatments
+- prescriptions
+- prescription_items
+- inventory_categories
+- inventory_items
+- suppliers
+- purchase_orders
+- purchase_order_items
+- inventory_movements
+- invoices
+- invoice_items
+- payments
+- grooming_bookings
+- hotel_rooms
+- hotel_bookings
+- vaccinations
+- inpatient_records
+- daily_monitorings
+- reports_cache
+- audit_logs
+- notifications
+- settings
 
 ---
 
-Status Management
+## Status Management
 
 Never store status as arbitrary strings.
 
 Use PHP Enums.
 
-Examples
+### AppointmentStatus
+- Scheduled
+- Confirmed
+- CheckedIn
+- Waiting
+- Called
+- Examining
+- Completed
+- Cancelled
 
-AppointmentStatus
+### QueueStatus
+- Waiting
+- Called
+- Examining
+- Completed
 
-Scheduled
+### InvoiceStatus
+- Draft
+- Pending
+- Paid
+- Voided
+- Refunded
 
-Confirmed
+### PaymentStatus
+- Pending
+- Paid
+- Failed
+- Refunded
+- Voided
 
-CheckedIn
+### InventoryMovementType
+- StockIn
+- StockOut
+- Adjustment
+- Purchase
+- Prescription
+- Return
 
-Waiting
+### GroomingStatus
+- Booked
+- CheckedIn
+- InProgress
+- Completed
+- Cancelled
 
-Called
+### HotelBookingStatus
+- Reserved
+- CheckedIn
+- Active
+- CheckedOut
+- Cancelled
 
-Examining
-
-Completed
-
-Cancelled
-
-InvoiceStatus
-
-Draft
-
-Pending
-
-Paid
-
-Voided
-
-Refunded
-
-PaymentStatus
-
-Pending
-
-Paid
-
-Failed
-
-Refunded
-
-InventoryMovementType
-
-StockIn
-
-StockOut
-
-Adjustment
-
-Purchase
-
-Prescription
-
-Return
+### InpatientStatus
+- Admitted
+- UnderTreatment
+- Discharged
 
 ---
 
-Database Rules
+## Database Rules
 
 Every foreign key must exist.
 
@@ -349,39 +362,37 @@ Payments cannot modify historical data.
 
 Invoices cannot be edited after payment.
 
+Polymorphic references must always resolve to a valid source record.
+
+Inventory item type must be validated at the application level.
+
 ---
 
-Inventory Ledger
+## Inventory Ledger
 
 Inventory must never be updated directly.
 
 Every stock change creates:
 
-inventory_movements
+- inventory_movements
 
-Fields
+Fields:
 
-inventory_item_id
-
-movement_type
-
-quantity
-
-reference_type
-
-reference_id
-
-performed_by
-
-notes
-
-created_at
+- inventory_item_id
+- movement_type
+- quantity
+- reference_type
+- reference_id
+- balance_after
+- performed_by
+- notes
+- created_at
 
 Current stock is calculated from movements or updated transactionally.
 
 ---
 
-Medical Records
+## Medical Records
 
 Medical Records are permanent.
 
@@ -389,221 +400,165 @@ Never hard delete.
 
 Every update should create audit history.
 
-Relationships
+Relationships:
 
-Pet
-
-Doctor
-
-Appointment
-
-Prescription
-
-Diagnosis
-
-Treatment
-
-Attachments
+- Pet
+- Doctor
+- Appointment
+- Prescription
+- Diagnosis
+- Treatment
+- Attachments
 
 ---
 
-Invoice
+## Invoice
 
-Invoice Header
+Invoice Header:
 
-Customer
+- Customer
+- Cashier
+- Invoiceable source (Appointment, Grooming Booking, or Hotel Booking)
+- Invoice Number
+- Subtotal
+- Discount
+- Tax
+- Grand Total
+- Status
 
-Appointment
+Invoice Items:
 
-Subtotal
-
-Discount
-
-Tax
-
-Grand Total
-
-Status
-
-Invoice Items
-
-Service
-
-Medicine
-
-Product
-
-Quantity
-
-Price
-
-Subtotal
+- Item Type (service | inventory_item)
+- Item ID
+- Description
+- Quantity
+- Price
+- Subtotal
 
 ---
 
-Payment
+## Payment
 
-Invoice
-
-Payment Method
-
-Amount
-
-Paid At
-
-Cashier
-
-Reference Number
-
-Status
-
-Notes
+- Invoice
+- Payment Method
+- Amount
+- Paid At
+- Cashier
+- Reference Number
+- Status
+- Notes
 
 ---
 
-Audit Log
+## Audit Log
 
-Capture
+Capture:
 
-User
-
-Action
-
-Model
-
-Model ID
-
-Old Value
-
-New Value
-
-IP Address
-
-User Agent
-
-Timestamp
+- User
+- Action
+- Model
+- Model ID
+- Old Value
+- New Value
+- IP Address
+- User Agent
+- Timestamp
 
 Never delete audit logs.
 
 ---
 
-Clinic Settings
+## Clinic Settings
 
 Store only one record.
 
-Clinic Name
-
-Address
-
-Phone
-
-Business Hours
-
-Timezone
-
-Payment Methods
-
-Branding
-
-Currency
+- Clinic Name
+- Address
+- Phone
+- Email
+- Business Hours
+- Timezone
+- Payment Methods
+- Branding
+- Currency
+- Tax Rate
 
 ---
 
-Indexing
+## Indexing
 
-Always index
+Always index:
 
-Foreign Keys
-
-Email
-
-Phone
-
-Appointment Date
-
-Invoice Number
-
-Payment Date
-
-Medicine Name
-
-SKU
-
-Barcode
-
-Frequently searched fields.
+- Foreign Keys
+- Polymorphic columns
+- Email
+- Phone
+- Appointment Date
+- Invoice Number
+- Payment Date
+- Inventory Item Name
+- SKU
+- Barcode
+- item_type
+- Status Columns
+- Frequently searched fields
 
 ---
 
-Transactions
+## Transactions
 
 Always wrap critical workflows.
 
-Examples
+Examples:
 
-Create Appointment
+- Create Appointment
+- Medical Record
+- Prescription
+- Invoice
+- Payment
+- Inventory Update
 
-Medical Record
+If any step fails:
 
-Prescription
-
-Invoice
-
-Payment
-
-Inventory Update
-
-If any step fails
-
-Rollback everything.
+- Rollback everything.
 
 ---
 
-Constraints
+## Constraints
 
-Stock cannot be negative.
-
-Invoice total cannot be negative.
-
-Payment cannot exceed invoice total.
-
-Pet must always belong to customer.
-
-Appointment requires pet.
-
-Prescription requires medical record.
+- Stock cannot be negative.
+- Invoice total cannot be negative.
+- Payment cannot exceed invoice total.
+- Pet must always belong to customer.
+- Appointment requires pet.
+- Prescription requires medical record.
+- Invoice must have a valid invoiceable source.
+- Inventory item type must be one of: medicine, product, supply.
+- Non-medicine inventory items must not require an expired_date.
 
 ---
 
-Soft Deletes
+## Soft Deletes
 
-Allowed
+### Allowed
+- Customers
+- Pets
+- Inventory Items
+- Suppliers
+- Users
+- Inventory Categories
 
-Customers
-
-Pets
-
-Medicines
-
-Inventory Items
-
-Suppliers
-
-Users
-
-Not Allowed
-
-Medical Records
-
-Payments
-
-Audit Logs
-
-Inventory Movements
+### Not Allowed
+- Medical Records
+- Payments
+- Audit Logs
+- Inventory Movements
+- Invoices
+- Prescriptions
 
 ---
 
-UUID
+## UUID
 
 Not required.
 
@@ -613,59 +568,44 @@ Future API may expose ULID or UUID publicly if needed.
 
 ---
 
-Performance
+## Performance
 
-Always eager load relationships.
-
-Avoid N+1 queries.
-
-Paginate large datasets.
-
-Use indexes.
-
-Cache configuration data.
+- Always eager load relationships.
+- Avoid N+1 queries.
+- Paginate large datasets.
+- Use indexes.
+- Cache configuration data.
 
 ---
 
-Security
+## Security
 
-Never trust client IDs.
-
-Always validate ownership.
-
-Use Policies.
-
-Use Foreign Keys.
-
-Prevent orphan records.
+- Never trust client IDs.
+- Always validate ownership.
+- Use Policies.
+- Use Foreign Keys.
+- Prevent orphan records.
+- Validate polymorphic types against a whitelist.
 
 ---
 
-Future Expansion
+## Future Expansion
 
 Database must support future features without major redesign.
 
-Multi Clinic
-
-Multi Tenant
-
-Laboratory
-
-Imaging
-
-REST API
-
-Mobile App
-
-Accounting
-
-AI Assistant
-
-Business Intelligence
+- Multi Clinic
+- Multi Tenant
+- Laboratory
+- Imaging
+- REST API
+- Mobile App
+- Accounting
+- AI Assistant
+- Business Intelligence
 
 ---
 
-Golden Rule
+## Golden Rule
 
 The database is the single source of truth.
 
